@@ -1,0 +1,165 @@
+https://mapshaper.org/
+
+https://github.com/mbloch/mapshaper/issues/117
+
+
+
+mapshaper BRMUE250GC_SIR_TOPO_JSON.json -join Regionais.csv keys=CD_GEOCMU,CD_GEOCMU string-fields=CD_GEOCMU,REGIAO_ANS,Cod_UF,Nome_da_UF,UF fields=REGIAO_ANS,Cod_UF,Nome_da_UF,UF encoding=windows-1252 -dissolve REGIAO_ANS,Cod_UF,Nome_da_UF,UF -o Regionais.json format=topojson encoding=windows-1252 id-field=REGIAO_ANS prettify
+
+
+
+
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_Municipios.csv  field-types=Cod_municipio:string keys=CD_GEOCMU,Cod_municipio fields=Cod_municipio,REGIAO_ANS,UF encoding=windows-1252 -dissolve REGIAO_ANS,UF,Cod_municipio -clean -simplify 2.8%  -o Regionais_Mun_UF.json encoding=windows-1252 format=topojson  id-field=Cod_municipio prettify
+
+
+REGIAO_ANS:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_Municipios.csv  field-types=Cod_municipio:string keys=CD_GEOCMU,Cod_municipio fields=Cod_municipio,REGIAO_ANS,UF encoding=windows-1252 -dissolve REGIAO_ANS,UF -o Regiao_ANS.json encoding=windows-1252 format=topojson  id-field=REGIAO_ANS prettify
+
+
+REGIAO_ANS novo:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_Municipios.csv  field-types=Cod_municipio:string keys=CD_GEOCMU,Cod_municipio fields=REGIAO_ANS,UF encoding=windows-1252 -dissolve REGIAO_ANS,UF -o Regiao_ANS_UF.json encoding=windows-1252 format=topojson  id-field=REGIAO_ANS prettify
+
+
+
+Regionais_Mun_UF:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_Municipios.csv  field-types=Cod_municipio:string keys=CD_GEOCMU,Cod_municipio fields=Cod_municipio,Nome_do_municipio,REGIAO_ANS,UF encoding=windows-1252 -dissolve REGIAO_ANS,UF,Nome_do_municipio,Cod_municipio -o Regionais_Mun_UF.json encoding=windows-1252 format=topojson  id-field=Cod_municipio prettify
+
+Regiao_ANS_Mun_UF novo:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_Municipios.csv  field-types=Cod_municipio:string keys=CD_GEOCMU,Cod_municipio fields=Cod_municipio,REGIAO_ANS,UF encoding=windows-1252 -dissolve REGIAO_ANS,UF,Cod_municipio -o Regiao_ANS_Mun_UF.json encoding=windows-1252 format=topojson  id-field=Cod_municipio prettify
+
+Macrorregiao_SUS_UF:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_Municipios.csv  field-types=Cod_municipio:string keys=CD_GEOCMU,Cod_municipio fields=UF,Cod_Macrorregiao_SUS,Macrorregiao_SUS,Cod_Regional_SUS,Regional_SUS,Cod_municipio,Nome_do_municipio encoding=windows-1252 -dissolve UF,Cod_Macrorregiao_SUS,Macrorregiao_SUS -o Macrorregiao_SUS_UF.json encoding=windows-1252 format=topojson  id-field=Cod_Macrorregiao_SUS prettify
+
+
+MicroIBGE_UF:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_Municipios.csv  field-types=Cod_municipio:string,Cod_micro:string keys=CD_GEOCMU,Cod_municipio fields=UF,Cod_micro,Nome_da_micro,Cod_municipio,Nome_do_municipio encoding=windows-1252 -dissolve UF,Cod_micro,Nome_da_micro -o MicroIBGE_UF.json encoding=windows-1252 format=topojson  id-field=Cod_micro prettify
+
+MicroIBGE_Mun_UF:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_Municipios.csv  field-types=Cod_municipio:string,Cod_micro:string  keys=CD_GEOCMU,Cod_municipio fields=UF,Cod_micro,Nome_da_micro,Cod_municipio,Nome_do_municipio encoding=windows-1252 -dissolve UF,Cod_micro,Nome_da_micro,Cod_municipio,Nome_do_municipio -o MicroIBGE_Mun_UF.json encoding=windows-1252 format=topojson  id-field=Cod_municipio prettify
+
+
+
+MicroIBGE_RegiaoSiemens:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_SIEMENS.csv  field-types=Cod_municipio:string,Cod_micro:string  keys=CD_GEOCMU,Cod_municipio fields=Regional_Siemens,Cod_micro,Nome_da_micro,Cod_municipio,Nome_do_municipio encoding=windows-1252 -dissolve Regional_Siemens,Cod_micro,Nome_da_micro -o MicroIBGE_RegiaoSiemens.json encoding=windows-1252 format=topojson  id-field=Cod_micro prettify
+
+
+MicroIBGE_Mun_RegiaoSiemens:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_SIEMENS.csv  field-types=Cod_municipio:string,Cod_micro:string  keys=CD_GEOCMU,Cod_municipio fields=Regional_Siemens,Cod_micro,Nome_da_micro,Cod_municipio,Nome_do_municipio encoding=windows-1252 -dissolve Regional_Siemens,Cod_micro,Nome_da_micro,Cod_municipio,Nome_do_municipio -o MicroIBGE_Mun_RegiaoSiemens.json encoding=windows-1252 format=topojson  id-field=Cod_municipio prettify
+
+
+MesoIBGE_Mun_RegiaoSiemens:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_SIEMENS.csv  field-types=Cod_municipio:string,Nome_da_meso:string  keys=CD_GEOCMU,Cod_municipio fields=Regional_Siemens,Nome_da_meso,Cod_municipio,Nome_do_municipio encoding=windows-1252 -dissolve Regional_Siemens,Nome_da_meso,Cod_municipio,Nome_do_municipio -o MesoIBGE_Mun_RegiaoSiemens.json encoding=windows-1252 format=topojson  id-field=Cod_municipio prettify
+
+
+MesoIBGE_RegiaoSiemens:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_SIEMENS.csv  field-types=Cod_municipio:string,Nome_da_meso:string  keys=CD_GEOCMU,Cod_municipio fields=Regional_Siemens,Nome_da_meso,Cod_municipio,Nome_do_municipio encoding=windows-1252 -dissolve Regional_Siemens,Nome_da_meso -o MesoIBGE_RegiaoSiemens.json encoding=windows-1252 format=topojson  id-field=Nome_da_meso prettify
+
+
+
+RegiaoSiemens:
+mapshaper -i Municipios.json encoding=windows-1252 field-types=CD_GEOCMU:string,NM_MUNICIP:string -join Mapa_SIEMENS.csv  field-types=Cod_municipio:string,Cod_micro:string  keys=CD_GEOCMU,Cod_municipio fields=Regional_Siemens,Cod_micro,Nome_da_micro,Cod_municipio,Nome_do_municipio encoding=windows-1252 -dissolve Regional_Siemens -o RegiaoSiemens.json encoding=windows-1252 format=topojson  id-field=Regional_Siemens prettify
+
+
+UF,Cod_Macrorregiao_SUS,Macrorregiao_SUS,Cod_Regional_SUS,Regional_SUS,Cod_municipio,Nome_do_municipio
+
+-i (input)
+
+	Each named geometry object of a TopoJSON input file is imported as a separate layer.
+
+	encoding=	Specify encoding used for reading .dbf files and delimited text files. If the encoding option is missing, mapshaper will try to detect the encoding of .dbf files. Dbf encoding can also be set using a .cpg file.
+
+	id-field= (Topo/GeoJSON) Import values of "id" property to this data field.
+
+	field-types= Type hints for importing delimited text. Takes a comma-separated list of field names with type hints appended; e.g. FIPS:str,zipcode:str. Recognized type hints include :str or :string, :num or :number. Without a type hint, fields containing text data that looks like numeric data, like ZIP Codes, will be converted to numbers.
+
+	Example
+
+	# Input a Shapefile with text data in the latin1 encoding and see what kind of data it contains
+	mapshaper countries_wgs84.shp encoding=latin1 -info
+
+
+
+-join
+	Join attribute data from a source layer or file to a target layer. 
+
+	If the keys= option is used, Mapshaper will join records by matching the values of key fields. 
+
+	<file|layer> or source= File or layer containing data records to join.
+
+	keys= Names of two fields to use as join keys, separated by a comma. The key field from the destination table is followed by the key field from the source table. 
+
+	fields= A comma-separated list of fields to copy from the external table. If the fields option is absent, all fields are copied except the key field (if joining on keys). Use fields=* to copy all fields, including any key field. Use fields= (empty list) to copy no fields.
+
+
+
+	Other options: encoding= target=
+
+	Example:
+	Copy data from a csv file to the attribute table of a Shapefile by matching values from the STATE_FIPS field of the Shapefile and the FIPS field of the csv file. (The ':str' suffix prevents FIPS codes from being converted to numbers.)
+
+	mapshaper states.shp -join demographics.txt keys=STATE_FIPS,FIPS:str -o out.shp
+
+
+
+-o (output)
+
+id-field= (Topo/GeoJSON/SVG) Specify one or more data fields to use as the "id" property of GeoJSON, TopoJSON or SVG features (comma-separated list). When exporting multiple layers, you can pass a list of field names. The first listed name that is present in a layer's attribute table will be used as the id field for that layer.
+
+field-order= (Shapefile/CSV) field-order=ascending sorts data fields in alphabetical order of field names
+
+prettify (Topo/GeoJSON) Format output for readability.
+
+singles (TopoJSON) Save each output layer as a separate file. Each output file and the TopoJSON object that it contains are named after the corresponding data layer.
+
+
+
+
+
+
+-dissolve
+Aggregate groups of features using a data field, or aggregate all features if no field is given. For polygon layers, -dissolve merges adjacent polygons by erasing shared boundaries. For point layers, -dissolve replaces a group of points with their centroid. For polyline layers, -dissolve tries to merge contiguous polylines into as few polylines as possible.
+
+<fields> Name of a data field or fields to dissolve on. Accepts a comma-separated list of field names.
+
+copy-fields= Fields to copy when dissolving (comma-sep. list). Copies values from the first feature in each group of dissolved features.
+
+Common options: name= + target=
+
+# Example: Aggregate county polygons to states
+mapshaper counties.shp -dissolve STATE -o states.shp
+
+# Example: Use the calc= option to count the number of dissolved features and perform other calculations
+mapshaper counties.shp -dissolve STATE calc='n = count(), total_pop = sum(POP), max_pop = max(POP), min_pop = min(POP)'
+-dissolve2
+(Experimental) Similar to -dissolve, but able to dissolve overlapping polygons as well as adjacent polygons.
+
+
+-clean
+Repair overlaps and fill small gaps between adjacent polygons. Only gaps that are completely enclosed can be filled. Areas that are contained by more than one polygon (overlaps) are assigned to the polygon with the largest area. Similarly, gaps are assigned to the largest-area polygon. This rule may give undesired results and will likely change in the future.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+width= (SVG/TopoJSON) Set the width of the output dataset in pixels. When used with TopoJSON output, this option switches the output coordinates from geographic units to pixels and flips the Y axis. SVG output is always in pixels (default SVG width is 800).
+
+height= (SVG/TopoJSON) Similar to the width option. If both height and width are set, content is centered inside the [0, 0, width, height] bounding box.
+
+max-height= (SVG/TopoJSON) Limit output height (units: pixels).
+
+margin= (SVG/TopoJSON) Set the margin between coordinate data and the edge of the viewport (default is 1). To assign different margins to each side, pass a list of values in the order <left,bottom,right,top> (similar to the bbox= option found in other commands).
+
+pixels= (SVG/TopoJSON) Output area in pixels (alternative to width=).
+
+id-prefix= Prefix for namespacing layer and feature ids.
+
+svg-scale= (SVG) Scale SVG output using geographical units per pixel (an alternative to the width= option).
